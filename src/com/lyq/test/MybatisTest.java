@@ -99,6 +99,7 @@ public class MybatisTest {
         sqlSession.commit();
         sqlSession.close();
     }
+
     //删
     @Test
     public void deleteCustomerTest() throws Exception{
