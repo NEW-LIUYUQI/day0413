@@ -1,5 +1,6 @@
 package com.lyq.test;
 
+import com.lyq.mapper.SpecilMapper;
 import com.lyq.po.Customer;
 import com.lyq.util.MybatisUtils;
 import org.apache.ibatis.io.Resources;
@@ -10,7 +11,9 @@ import org.junit.Test;
 
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MybatisTest {
     //根据客户编号查询客户信息
@@ -119,7 +122,23 @@ public class MybatisTest {
     //zuoye
     public static class TestSpecil{
         public static void main(String[] args) {
-            SqlSession sqlSession =
+            SqlSession sqlSession = MybatisUtils.getSqlSession(false);
+            int pageNum=1;
+            int pageSize=5;
+            int start=(pageNum-1)*pageSize;
+            SpecilMapper specilMapper = sqlSession.getMapper(SpecilMapper.class);
+
+            Map<String,Object>map = new HashMap<>();
+            map.put("start",start);
+            map.put("pageSize",pageSize);
+
+            List<SpecilMapper> specilMappers =specilMapper.findSpecilSplit(map);
+
+            for (SpecilMapper specilMapper1 : specilMappers){
+                System.out.println(specilMapper);
+
+            }
+            MybatisUtils.closeSqlSession(sqlSession);
         }
     }
 
